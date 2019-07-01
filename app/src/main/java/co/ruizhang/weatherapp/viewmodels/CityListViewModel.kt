@@ -16,7 +16,7 @@ data class CityListViewData(
 )
 
 
-class CityListViewModel(val service: CityListService) : ViewModel() {
+class CityListViewModel(private val service: CityListService) : ViewModel() {
     val cityListResult: Observable<ViewResultData<List<CityListViewData>>>
         get() = cityResultBS
 
@@ -27,11 +27,15 @@ class CityListViewModel(val service: CityListService) : ViewModel() {
 
 
     init {
-        refresh()
+        load(useCache = true)
     }
 
     fun refresh() {
-        service.getCitys()
+        load(useCache = false)
+    }
+
+    private fun load(useCache: Boolean) {
+        service.getCities(useCache)
             .doOnSubscribe {
                 cityResultBS.onNext(ViewResultData.Loading(cityResultBS.value.data))
             }

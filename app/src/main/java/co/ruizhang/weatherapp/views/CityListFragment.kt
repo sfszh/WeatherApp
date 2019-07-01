@@ -29,6 +29,9 @@ class CityListFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         disposable = CompositeDisposable()
+        binding.swipeContainer.setOnRefreshListener {
+            cityListViewModel.refresh()
+        }
         cityListViewModel.cityListResult
             .subscribeBy(
                 onNext = { result ->
@@ -47,7 +50,7 @@ class CityListFragment : Fragment() {
                         }
                         is ViewResultData.Success -> {
                             binding.emptyStateProgress.visibility = View.GONE
-
+                            binding.swipeContainer.isRefreshing = false
                             if (result.data.isNullOrEmpty()) {
                                 Timber.d("success empty")
                                 binding.emptyStateText.visibility = View.VISIBLE
@@ -61,7 +64,7 @@ class CityListFragment : Fragment() {
 
                         is ViewResultData.Error -> {
                             binding.emptyStateProgress.visibility = View.GONE
-
+                            binding.swipeContainer.isRefreshing = false
                             if (result.data.isNullOrEmpty()) {
                                 Timber.d("Error empty")
                                 binding.emptyStateText.visibility = View.VISIBLE

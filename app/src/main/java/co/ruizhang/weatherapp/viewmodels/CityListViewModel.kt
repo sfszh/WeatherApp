@@ -11,6 +11,7 @@ import io.reactivex.subjects.BehaviorSubject
 
 
 data class CityListViewData(
+    val id: String,
     val name: String,
     val weather: String
 )
@@ -33,6 +34,7 @@ class CityListViewModel(private val service: CityListService) : ViewModel() {
     fun refresh() {
         load(useCache = false)
     }
+
 
     private fun load(useCache: Boolean) {
         service.getCities(useCache)
@@ -59,7 +61,7 @@ class CityListViewModel(private val service: CityListService) : ViewModel() {
     }
 
     private fun CityModel.mapViewData(): CityListViewData {
-        return CityListViewData(name, weather)
+        return CityListViewData(id, name, weather)
     }
 
 }

@@ -1,4 +1,4 @@
-package co.ruizhang.weatherapp.views
+package co.ruizhang.weatherapp.views.citylist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import co.ruizhang.weatherapp.R
 import co.ruizhang.weatherapp.databinding.FragmentCityListBinding
+import co.ruizhang.weatherapp.viewmodels.CityListViewData
 import co.ruizhang.weatherapp.viewmodels.CityListViewModel
 import co.ruizhang.weatherapp.viewmodels.ViewResultData
 import io.reactivex.disposables.CompositeDisposable
@@ -16,7 +18,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class CityListFragment : Fragment() {
+class CityListFragment : Fragment(), CityListClickListener {
     private val cityListViewModel: CityListViewModel by viewModel()
     private var disposable: CompositeDisposable = CompositeDisposable()
     private lateinit var binding: FragmentCityListBinding
@@ -32,6 +34,9 @@ class CityListFragment : Fragment() {
         binding.swipeContainer.setOnRefreshListener {
             cityListViewModel.refresh()
         }
+
+        binding.recyclerView.adapter = CityListAdapter(this)
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
         cityListViewModel.cityListResult
             .subscribeBy(
                 onNext = { result ->
@@ -40,12 +45,10 @@ class CityListFragment : Fragment() {
                             binding.emptyStateText.visibility = View.GONE
                             if (result.data.isNullOrEmpty()) {
                                 Timber.d("loading empty")
-                                binding.emptyStateProgress.visibility = View.VISIBLE
-                                binding.list.visibility = View.INVISIBLE
+                                showEmptyState()
                             } else {
                                 Timber.d("loading with data")
-                                binding.emptyStateProgress.visibility = View.GONE
-                                binding.list.visibility = View.VISIBLE
+                                showLoadedState(result)
                             }
                         }
                         is ViewResultData.Success -> {
@@ -53,12 +56,10 @@ class CityListFragment : Fragment() {
                             binding.swipeContainer.isRefreshing = false
                             if (result.data.isNullOrEmpty()) {
                                 Timber.d("success empty")
-                                binding.emptyStateText.visibility = View.VISIBLE
-                                binding.list.visibility = View.INVISIBLE
+                                showEmptyState()
                             } else {
                                 Timber.d("success with data")
-                                binding.emptyStateText.visibility = View.GONE
-                                binding.list.visibility = View.INVISIBLE
+                                showLoadedState(result)
                             }
                         }
 
@@ -67,12 +68,10 @@ class CityListFragment : Fragment() {
                             binding.swipeContainer.isRefreshing = false
                             if (result.data.isNullOrEmpty()) {
                                 Timber.d("Error empty")
-                                binding.emptyStateText.visibility = View.VISIBLE
-                                binding.list.visibility = View.INVISIBLE
+                                showEmptyState()
                             } else {
                                 Timber.d("Error with data ${result.throwable}")
-                                binding.emptyStateText.visibility = View.GONE
-                                binding.list.visibility = View.INVISIBLE
+                                showLoadedState(result)
                                 Toast.makeText(context, R.string.city_error_text, Toast.LENGTH_LONG).show()
 
                             }
@@ -83,8 +82,25 @@ class CityListFragment : Fragment() {
             .addTo(disposable)
     }
 
+    private fun showLoadedState(result: ViewResultData<List<CityListViewData>>) {
+        binding.emptyStateText.visibility = View.GONE
+        binding.recyclerView.visibility = View.VISIBLE
+        (binding.recyclerView.adapter as CityListAdapter).submitList(result.data)
+    }
+
+    private fun showEmptyState() {
+        binding.emptyStateText.visibility = View.VISIBLE
+        binding.recyclerView.visibility = View.INVISIBLE
+    }
+
     override fun onStop() {
         super.onStop()
         disposable.clear()
     }
+
+    override fun onCityClicked(city: CityListViewData) {
+        Timber.d("city get clicked ${city.id}")
+    }
+
+
 }

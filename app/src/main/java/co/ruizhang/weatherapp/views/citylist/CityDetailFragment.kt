@@ -47,7 +47,7 @@ class CityDetailFragment : Fragment() {
                     } else {
                         binding.content.visibility = View.VISIBLE
                         binding.title.text = result.data.name
-                        binding.weather.text = result.data.weather
+                        binding.weather.text = result.data.weathers.joinToString()
                         binding.emptyStateProgress.visibility = View.GONE
                     }
                     when (result) {

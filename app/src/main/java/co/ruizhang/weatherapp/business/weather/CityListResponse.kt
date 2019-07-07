@@ -3,7 +3,7 @@ package co.ruizhang.weatherapp.business.weather
 import co.ruizhang.weatherapp.business.CityModel
 import com.google.gson.annotations.Expose
 
-open class CityWeatherResponse {
+open class CityListResponse {
     @Expose
     var cont: Int? = null
     @Expose

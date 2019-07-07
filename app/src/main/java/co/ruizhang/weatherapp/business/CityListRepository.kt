@@ -5,23 +5,22 @@ import io.reactivex.schedulers.Schedulers
 
 interface CityListRepository {
     fun getCities(useCache: Boolean): Single<List<CityModel>>
-    fun get(id: Int, useCache: Boolean): Single<CityModel>
+    fun get(id: Int, useCache: Boolean): Single<CityDetailModel>
 }
 
 class CityListRepositoryImpl(private val weatherApi: WeatherApi) : CityListRepository {
     override fun getCities(useCache: Boolean): Single<List<CityModel>> {
-//        return Single.just(listOf(CityModel("cityid", "cityName", "cityWeather")))
         return weatherApi
             .weather(getCityIds(), "metrics", getApiKey())
             .subscribeOn(Schedulers.io())
             .map { weather -> weather.mapToDomain() }
     }
 
-    override fun get(id: Int, useCache: Boolean): Single<CityModel> {
+    override fun get(id: Int, useCache: Boolean): Single<CityDetailModel> {
         return weatherApi
-            .weather(listOf(id), "metrics", getApiKey())
+            .forcast(id, 5, getApiKey())
             .subscribeOn(Schedulers.io())
-            .map { weather -> weather.mapToDomain().first() }
+            .map { resp -> resp.mapToDomain() }
     }
 
     //todo retrieve this from keystore

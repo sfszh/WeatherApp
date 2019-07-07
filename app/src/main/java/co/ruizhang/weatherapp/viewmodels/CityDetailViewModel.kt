@@ -1,8 +1,8 @@
 package co.ruizhang.weatherapp.viewmodels
 
 import androidx.lifecycle.ViewModel
+import co.ruizhang.weatherapp.business.CityDetailModel
 import co.ruizhang.weatherapp.business.CityListRepository
-import co.ruizhang.weatherapp.business.CityModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -13,7 +13,7 @@ import io.reactivex.subjects.BehaviorSubject
 data class CityDetailViewData(
     val id: Int,
     val name: String,
-    val weather: String
+    val weathers: List<String>
 )
 
 class CityDetailViewModel(private val service: CityListRepository) : ViewModel() {
@@ -62,7 +62,7 @@ class CityDetailViewModel(private val service: CityListRepository) : ViewModel()
         disposables.clear()
     }
 
-    private fun CityModel.mapViewData(): CityDetailViewData {
-        return CityDetailViewData(id, name, weather)
+    private fun CityDetailModel.mapViewData(): CityDetailViewData {
+        return CityDetailViewData(id, name, weathers)
     }
 }

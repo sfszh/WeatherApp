@@ -1,6 +1,7 @@
 package co.ruizhang.weatherapp.business
 
-import co.ruizhang.weatherapp.business.weather.CityWeatherResponse
+import co.ruizhang.weatherapp.business.weather.CityDetailResponse
+import co.ruizhang.weatherapp.business.weather.CityListResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -13,5 +14,13 @@ interface WeatherApi {
         @Query("id") id: List<Int>,
         @Query("units") units: String ,
         @Query("appid") appId: String
-    ): Single<CityWeatherResponse>
+    ): Single<CityListResponse>
+
+    @GET("/data/2.5/forecast")
+    @Headers("Content-type: application/json")
+    fun forcast(
+        @Query("id") id: Int,
+        @Query("cnt") cnt: Int,
+        @Query("appid") appId: String
+    ):Single<CityDetailResponse>
 }

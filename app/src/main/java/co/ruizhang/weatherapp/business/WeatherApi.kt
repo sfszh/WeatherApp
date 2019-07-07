@@ -1,16 +1,17 @@
 package co.ruizhang.weatherapp.business
 
+import co.ruizhang.weatherapp.business.weather.CityWeatherResponse
 import io.reactivex.Single
-import org.koin.sampleapp.repository.data.weather.Weather
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface WeatherApi {
-    @GET("/data/2.5/weather")
+    @GET("/data/2.5/group")
     @Headers("Content-type: application/json")
-    fun weather(@Query("lat") lat: Double?,
-                @Query("lon") lon: Double?,
-                @Query("lang") lang: String,
-                @Query("appid") appId: String): Single<Weather>
+    fun weather(
+        @Query("id") id: List<String>,
+        @Query("units") units: String ,
+        @Query("appid") appId: String
+    ): Single<CityWeatherResponse>
 }

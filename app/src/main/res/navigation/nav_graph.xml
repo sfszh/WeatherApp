@@ -6,5 +6,13 @@
 
     <fragment android:id="@+id/cityListFragment" android:name="co.ruizhang.weatherapp.views.citylist.CityListFragment"
               android:label="CityListFragment"
-              tools:layout="@layout/fragment_city_list"/>
+              tools:layout="@layout/fragment_city_list">
+        <action android:id="@+id/action_cityListFragment_to_cityDetailFragment"
+                app:destination="@id/cityDetailFragment"/>
+    </fragment>
+    <fragment android:id="@+id/cityDetailFragment"
+              android:name="co.ruizhang.weatherapp.views.citylist.CityDetailFragment"
+              android:label="CityDetailFragment">
+        <argument android:name="cityId" app:argType="integer"/>
+    </fragment>
 </navigation>

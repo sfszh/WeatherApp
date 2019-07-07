@@ -12,7 +12,7 @@ import io.reactivex.subjects.BehaviorSubject
 
 
 data class CityListViewData(
-    val id: String,
+    val id: Int,
     val name: String,
     val weather: String
 )

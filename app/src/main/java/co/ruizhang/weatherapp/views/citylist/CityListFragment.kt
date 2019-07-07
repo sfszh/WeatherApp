@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import co.ruizhang.weatherapp.R
 import co.ruizhang.weatherapp.databinding.FragmentCityListBinding
 import co.ruizhang.weatherapp.viewmodels.CityListViewData
 import co.ruizhang.weatherapp.viewmodels.CityListViewModel
@@ -100,6 +100,10 @@ class CityListFragment : Fragment(), CityListClickListener {
 
     override fun onCityClicked(city: CityListViewData) {
         Timber.d("city get clicked ${city.id}")
+        val action = CityListFragmentDirections.actionCityListFragmentToCityDetailFragment(city.id)
+//        val action = confirmationAction(amount)
+        findNavController().navigate(action)
+
     }
 
 

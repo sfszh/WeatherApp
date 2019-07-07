@@ -12,7 +12,7 @@ open class CityWeatherResponse {
     fun mapToDomain(): List<CityModel> {
         return list.mapNotNull { city ->
             val weather = city.weather?.first() ?: return@mapNotNull null
-            CityModel(city.id.toString(), city.name ?: "empty", weather.main ?: "empty")
+            CityModel(city.id, city.name ?: "empty", weather.main ?: "empty")
         }
     }
 }

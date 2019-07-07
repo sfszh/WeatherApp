@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import co.ruizhang.weatherapp.databinding.FragmentCityDetailBinding
 import co.ruizhang.weatherapp.viewmodels.CityDetailViewModel
 import co.ruizhang.weatherapp.viewmodels.ViewResultData
@@ -21,6 +22,9 @@ class CityDetailFragment : Fragment() {
     private var disposable: CompositeDisposable = CompositeDisposable()
     private lateinit var binding: FragmentCityDetailBinding
 
+    val args: CityDetailFragmentArgs by navArgs()
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCityDetailBinding.inflate(inflater, container, false)
         return binding.root
@@ -32,6 +36,8 @@ class CityDetailFragment : Fragment() {
         binding.swipeContainer.setOnRefreshListener {
             cityDetailViewModel.refresh()
         }
+        cityDetailViewModel.start(args.cityId)
+
         cityDetailViewModel.cityDetailResult
             .subscribeBy(
                 onNext = { result ->

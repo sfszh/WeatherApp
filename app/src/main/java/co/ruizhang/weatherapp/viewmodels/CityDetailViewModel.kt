@@ -11,7 +11,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.BehaviorSubject
 
 data class CityDetailViewData(
-    val id: String,
+    val id: Int,
     val name: String,
     val weather: String
 )
@@ -26,7 +26,11 @@ class CityDetailViewModel(private val service: CityListRepository) : ViewModel()
         BehaviorSubject.createDefault<ViewResultData<CityDetailViewData>>(ViewResultData.Success(null))
 
     init {
-        load(1, useCache = true)
+    }
+
+    fun start(id: Int) {
+        load(id, true)
+
     }
 
     fun refresh() {

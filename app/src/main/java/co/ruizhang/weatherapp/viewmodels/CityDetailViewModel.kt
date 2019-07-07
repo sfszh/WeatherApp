@@ -19,6 +19,7 @@ data class CityDetailViewData(
 class CityDetailViewModel(private val service: CityListRepository) : ViewModel() {
     private val disposables: CompositeDisposable = CompositeDisposable()
 
+    private var idCache: Int? = null
     val cityDetailResult: Observable<ViewResultData<CityDetailViewData>>
         get() = cityResultBS
 
@@ -30,11 +31,16 @@ class CityDetailViewModel(private val service: CityListRepository) : ViewModel()
 
     fun start(id: Int) {
         load(id, true)
-
+        idCache = id
     }
 
     fun refresh() {
-        load(1, useCache = false)
+        idCache?.let { id ->
+            load(id, useCache = false)
+        }
+        if(idCache == null) {
+            cityResultBS.onNext(ViewResultData.Error(cityResultBS.value.data, IllegalStateException("can not find city")))
+        }
     }
 
     private fun load(id: Int, useCache: Boolean) {

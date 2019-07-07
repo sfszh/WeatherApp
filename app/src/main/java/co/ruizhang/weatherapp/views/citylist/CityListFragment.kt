@@ -35,6 +35,9 @@ class CityListFragment : Fragment(), CityListClickListener {
             cityListViewModel.refresh()
         }
 
+        binding.floatingActionButton.setOnClickListener {
+            Toast.makeText(context, "To Be Implemented", Toast.LENGTH_SHORT).show()
+        }
         binding.recyclerView.adapter = CityListAdapter(this)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.addItemDecoration(CityListDecoration())
@@ -75,7 +78,7 @@ class CityListFragment : Fragment(), CityListClickListener {
                             }
                             binding.emptyStateProgress.visibility = View.GONE
                             binding.swipeContainer.isRefreshing = false
-                            Toast.makeText(context, result.throwable.localizedMessage, Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, result.throwable.localizedMessage, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

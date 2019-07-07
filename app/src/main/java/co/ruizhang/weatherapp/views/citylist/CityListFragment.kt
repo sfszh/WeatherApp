@@ -72,9 +72,8 @@ class CityListFragment : Fragment(), CityListClickListener {
                             } else {
                                 Timber.d("Error with data ${result.throwable}")
                                 showLoadedState(result)
-                                Toast.makeText(context, R.string.city_error_text, Toast.LENGTH_LONG).show()
-
                             }
+                            Toast.makeText(context, result.throwable.localizedMessage, Toast.LENGTH_LONG).show()
                         }
                     }
                 }

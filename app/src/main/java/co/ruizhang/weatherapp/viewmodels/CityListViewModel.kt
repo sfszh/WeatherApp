@@ -1,9 +1,10 @@
 package co.ruizhang.weatherapp.viewmodels
 
 import androidx.lifecycle.ViewModel
-import co.ruizhang.weatherapp.business.CityListService
+import co.ruizhang.weatherapp.business.CityListRepository
 import co.ruizhang.weatherapp.business.CityModel
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
@@ -17,7 +18,7 @@ data class CityListViewData(
 )
 
 
-class CityListViewModel(private val service: CityListService) : ViewModel() {
+class CityListViewModel(private val service: CityListRepository) : ViewModel() {
     val cityListResult: Observable<ViewResultData<List<CityListViewData>>>
         get() = cityResultBS
 
@@ -38,6 +39,7 @@ class CityListViewModel(private val service: CityListService) : ViewModel() {
 
     private fun load(useCache: Boolean) {
         service.getCities(useCache)
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
                 cityResultBS.onNext(ViewResultData.Loading(cityResultBS.value.data))
             }

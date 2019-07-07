@@ -42,7 +42,6 @@ class CityListFragment : Fragment(), CityListClickListener {
                 onNext = { result ->
                     when (result) {
                         is ViewResultData.Loading -> {
-                            binding.emptyStateText.visibility = View.GONE
                             if (result.data.isNullOrEmpty()) {
                                 Timber.d("loading empty")
                                 showEmptyState()
@@ -50,10 +49,10 @@ class CityListFragment : Fragment(), CityListClickListener {
                                 Timber.d("loading with data")
                                 showLoadedState(result)
                             }
+                            binding.emptyStateText.visibility = View.GONE
+
                         }
                         is ViewResultData.Success -> {
-                            binding.emptyStateProgress.visibility = View.GONE
-                            binding.swipeContainer.isRefreshing = false
                             if (result.data.isNullOrEmpty()) {
                                 Timber.d("success empty")
                                 showEmptyState()
@@ -61,11 +60,11 @@ class CityListFragment : Fragment(), CityListClickListener {
                                 Timber.d("success with data")
                                 showLoadedState(result)
                             }
+                            binding.emptyStateProgress.visibility = View.GONE
+                            binding.swipeContainer.isRefreshing = false
                         }
 
                         is ViewResultData.Error -> {
-                            binding.emptyStateProgress.visibility = View.GONE
-                            binding.swipeContainer.isRefreshing = false
                             if (result.data.isNullOrEmpty()) {
                                 Timber.d("Error empty")
                                 showEmptyState()
@@ -73,6 +72,8 @@ class CityListFragment : Fragment(), CityListClickListener {
                                 Timber.d("Error with data ${result.throwable}")
                                 showLoadedState(result)
                             }
+                            binding.emptyStateProgress.visibility = View.GONE
+                            binding.swipeContainer.isRefreshing = false
                             Toast.makeText(context, result.throwable.localizedMessage, Toast.LENGTH_LONG).show()
                         }
                     }

@@ -11,7 +11,7 @@ interface CityListRepository {
 class CityListRepositoryImpl(private val weatherApi: WeatherApi) : CityListRepository {
     override fun getCities(useCache: Boolean): Single<List<CityModel>> {
         return weatherApi
-            .weather(getCityIds(), "metrics", getApiKey())
+            .weather(getCityIds().joinToString(","), "metrics", getApiKey())
             .subscribeOn(Schedulers.io())
             .map { weather -> weather.mapToDomain() }
     }
@@ -30,7 +30,7 @@ class CityListRepositoryImpl(private val weatherApi: WeatherApi) : CityListRepos
 
     //todo retrieve this from storage
     private fun getCityIds(): List<Int> {
-        return listOf(524901)
+        return listOf(524901,703448,2643743)
     }
 
 }

@@ -48,23 +48,24 @@ class CityDetailFragment : Fragment() {
                         binding.content.visibility = View.VISIBLE
                         binding.title.text = result.data.name
                         binding.weather.text = result.data.weathers.joinToString()
-                        binding.emptyStateProgress.visibility = View.GONE
                     }
                     when (result) {
                         is ViewResultData.Loading -> {
                             if (result.data == null) {
                                 binding.emptyStateProgress.visibility = View.VISIBLE
+                            }else {
+                                binding.swipeContainer.isRefreshing = true
                             }
-                            binding.swipeContainer.isRefreshing = true
-
                         }
                         is ViewResultData.Success -> {
                             binding.swipeContainer.isRefreshing = false
+                            binding.emptyStateProgress.visibility = View.GONE
                         }
 
                         is ViewResultData.Error -> {
                             Toast.makeText(context, result.throwable.localizedMessage, Toast.LENGTH_LONG).show()
                             binding.swipeContainer.isRefreshing = false
+                            binding.emptyStateProgress.visibility = View.GONE
                         }
                     }
                 },

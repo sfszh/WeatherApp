@@ -37,6 +37,7 @@ class CityListFragment : Fragment(), CityListClickListener {
 
         binding.recyclerView.adapter = CityListAdapter(this)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        binding.recyclerView.addItemDecoration(CityListDecoration())
         cityListViewModel.cityListResult
             .subscribeBy(
                 onNext = { result ->

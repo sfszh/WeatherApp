@@ -11,7 +11,7 @@ interface WeatherApi {
     @GET("/data/2.5/group")
     @Headers("Content-type: application/json")
     fun weather(
-        @Query("id") id: List<Int>,
+        @Query("id") id: String,
         @Query("units") units: String ,
         @Query("appid") appId: String
     ): Single<CityListResponse>

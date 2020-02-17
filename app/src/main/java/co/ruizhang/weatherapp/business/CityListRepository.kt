@@ -1,5 +1,6 @@
 package co.ruizhang.weatherapp.business
 
+import co.ruizhang.weatherapp.BuildConfig
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
@@ -25,7 +26,7 @@ class CityListRepositoryImpl(private val weatherApi: WeatherApi) : CityListRepos
 
     //todo retrieve this from keystore
     private fun getApiKey(): String {
-        return "eee56fea6143a11bbf946a0273cc5b81"
+        return BuildConfig.WEATHER_API_KEY
     }
 
     //todo retrieve this from storage

@@ -23,6 +23,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "WEATHER_API_KEY", apikeyProperties['WEATHER_API_KEY'])
+        buildConfigField("String", "PLACE_API_KEY", apikeyProperties['PLACE_API_KEY'])
+
+
     }
     buildTypes {
         release {
@@ -85,4 +88,8 @@ dependencies {
 
     //Misc
     implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    //map
+    implementation 'com.google.android.libraries.places:places:2.0.0'
+
 }

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import co.ruizhang.weatherapp.R
 import co.ruizhang.weatherapp.databinding.FragmentCityListBinding
 import co.ruizhang.weatherapp.viewmodels.CityListViewData
 import co.ruizhang.weatherapp.viewmodels.CityListViewModel
@@ -36,7 +37,7 @@ class CityListFragment : Fragment(), CityListClickListener {
         }
 
         binding.floatingActionButton.setOnClickListener {
-            Toast.makeText(context, "To Be Implemented", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.citySearchFragment)
         }
         binding.recyclerView.adapter = CityListAdapter(this)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)

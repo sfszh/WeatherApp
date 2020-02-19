@@ -13,9 +13,6 @@
 		<action
 				android:id="@+id/action_cityListFragment_to_cityDetailFragment"
 				app:destination="@id/cityDetailFragment" />
-		<action
-				android:id="@+id/action_cityListFragment_to_citySearchFragment"
-				app:destination="@id/citySearchFragment" />
 	</fragment>
 	<fragment
 			android:id="@+id/cityDetailFragment"
@@ -25,8 +22,4 @@
 				android:name="cityId"
 				app:argType="integer" />
 	</fragment>
-	<fragment
-			android:id="@+id/citySearchFragment"
-			android:name="co.ruizhang.weatherapp.views.citysearch.CitySearchFragment"
-			android:label="CitySearchFragment" />
 </navigation>

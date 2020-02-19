@@ -8,6 +8,9 @@ import com.google.android.libraries.places.api.Places
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import timber.log.Timber
+import timber.log.Timber.DebugTree
+
 
 class MyApplication : Application() {
     override fun onCreate() {
@@ -17,6 +20,10 @@ class MyApplication : Application() {
             androidLogger()
             androidContext(this@MyApplication)
             modules(listOf(appModule, networkModule))
+        }
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
         }
 
         // Initialize the SDK

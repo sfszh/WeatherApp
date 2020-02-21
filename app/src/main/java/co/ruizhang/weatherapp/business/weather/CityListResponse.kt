@@ -1,6 +1,6 @@
 package co.ruizhang.weatherapp.business.weather
 
-import co.ruizhang.weatherapp.business.CityModel
+import co.ruizhang.weatherapp.business.CityWeather
 import com.google.gson.annotations.Expose
 
 open class CityListResponse {
@@ -9,10 +9,10 @@ open class CityListResponse {
     @Expose
     var list: List<CityEntity> = emptyList()
 
-    fun mapToDomain(): List<CityModel> {
+    fun mapToDomain(): List<CityWeather> {
         return list.mapNotNull { city ->
             val weather = city.weather?.first() ?: return@mapNotNull null
-            CityModel(city.id, city.name ?: "empty", weather.main ?: "empty")
+            CityWeather(city.id, city.name ?: "empty", weather.main ?: "empty")
         }
     }
 }

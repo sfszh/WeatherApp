@@ -16,6 +16,7 @@ interface WeatherApi {
         @Query("appid") appId: String
     ): Single<CityListResponse>
 
+
     @GET("/data/2.5/forecast")
     @Headers("Content-type: application/json")
     fun forcast(

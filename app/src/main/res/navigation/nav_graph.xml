@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/nav_graph" app:startDestination="@id/cityListFragment">
-
-    <fragment android:id="@+id/cityListFragment" android:name="co.ruizhang.weatherapp.views.citylist.CityListFragment"
-              android:label="CityListFragment"
-              tools:layout="@layout/fragment_city_list">
-        <action android:id="@+id/action_cityListFragment_to_cityDetailFragment"
-                app:destination="@id/cityDetailFragment"/>
-    </fragment>
-    <fragment android:id="@+id/cityDetailFragment"
-              android:name="co.ruizhang.weatherapp.views.citylist.CityDetailFragment"
-              android:label="CityDetailFragment">
-        <argument android:name="cityId" app:argType="integer"/>
-    </fragment>
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:id="@+id/nav_graph"
+		app:startDestination="@id/cityListFragment">
+	
+	<fragment
+			android:id="@+id/cityListFragment"
+			android:name="co.ruizhang.weatherapp.views.citylist.CityListFragment"
+			android:label="CityListFragment"
+			tools:layout="@layout/fragment_city_list">
+		<action
+				android:id="@+id/action_cityListFragment_to_cityDetailFragment"
+				app:destination="@id/cityDetailFragment" />
+	</fragment>
+	<fragment
+			android:id="@+id/cityDetailFragment"
+			android:name="co.ruizhang.weatherapp.views.citylist.CityDetailFragment"
+			android:label="CityDetailFragment">
+		<argument
+				android:name="cityId"
+				app:argType="integer" />
+	</fragment>
 </navigation>

@@ -4,6 +4,7 @@ import android.app.Application
 import co.ruizhang.weatherapp.BuildConfig
 import co.ruizhang.weatherapp.di.appModule
 import co.ruizhang.weatherapp.di.networkModule
+import co.ruizhang.weatherapp.di.persistenceModule
 import com.google.android.libraries.places.api.Places
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -19,7 +20,7 @@ class MyApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@MyApplication)
-            modules(listOf(appModule, networkModule))
+            modules(listOf(appModule, networkModule, persistenceModule))
         }
 
         if (BuildConfig.DEBUG) {

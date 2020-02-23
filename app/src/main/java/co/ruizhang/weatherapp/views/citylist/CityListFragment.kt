@@ -112,6 +112,10 @@ class CityListFragment : Fragment(), CityListClickListener {
                 }
             )
             .addTo(disposable)
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.start()
     }
 
